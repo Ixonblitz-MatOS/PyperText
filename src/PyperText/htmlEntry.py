@@ -157,7 +157,7 @@ class NumberEntry(htmlWidget):
         try:
             if str(val).isnumeric():self.options.append(f"value=\"{str(val)}\"")
             else:print("Invalid number for the value, no action taken")
-        except:pass
+        except (Exception):pass
         self.CustomHeader=True
     def setHeight(self,height:str|int)->None:
         '''
