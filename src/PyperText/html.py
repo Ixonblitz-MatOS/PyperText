@@ -6,7 +6,7 @@ import platform #(.path.exists() to check if the path they want exists,)
 import os as oss
 import webbrowser
 from io import TextIOWrapper
-from htmlWidget import htmlWidget#base class for widgets
+from htmlWidget import htmlWidget,htmlParent#base class for widgets
 os=platform.system()
 if (os.__contains__("Linux")):os="Linux"
 elif(os.__contains__("Darwin")):os="MacOS"
@@ -17,7 +17,7 @@ else:
 #classes
 
 
-class Script(htmlWidget):
+class Script(htmlWidget,htmlParent):
     '''
     This is the original init for the module
     '''
@@ -53,11 +53,14 @@ class Script(htmlWidget):
         self.scripts: list[str]=list[str]()
         self.final: str=str()
         self.stylesheet=None
-    def addScript(self,script:str)->None:
+    def addScript(self,script:str,force:bool=False)->None:
         '''
         Adds a Javascript script to the file
         '''
-        self.scripts.append(script)
+        if(oss.path.exists(script) and script.endswith(".js")):self.scripts.append(script)
+        else:
+            if force:self.scripts.append(script)
+            else:print("The file does not exist or does not end in .js, No action taken, to add the script anyway set force equal to True")
     def addCustomHeader(self,options:str)->None:
         '''
         Changes the default header

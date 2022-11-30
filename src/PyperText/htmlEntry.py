@@ -150,11 +150,14 @@ class NumberEntry(htmlWidget):
         '''
         self.options.append(f"id=\"{ids}\"")
         self.CustomHeader=True
-    def setValue(self,val:str)->None:
+    def setValue(self,val:str|int)->None:
         '''
         Set the value of the entry
         '''
-        self.options.append(f"value=\"{val}\"")
+        try:
+            if val.isnumeric():self.options.append(f"value=\"{str(val)}\"")
+            else:print("Invalid number for the value, no action taken")
+        except:pass
         self.CustomHeader=True
     def setHeight(self,height:str|int)->None:
         '''
