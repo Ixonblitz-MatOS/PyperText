@@ -55,6 +55,10 @@ class Header(htmlWidget):
         self.CustomHeader=True
     def _buildOptions(self)->str:
         final:str=""
+        if "style" in self.options:
+            for i in self.options:
+                if i.__includes__("style"):self.style=i.split("style=")[1].split(";")[0]  # type: ignore
+                else:continue
         for i in self.options:final+=i+" "
         return final
     def _buildStyle(self)->str:
@@ -66,7 +70,7 @@ class Header(htmlWidget):
     def finalize(self)->None:
         if self.CustomHeader:
             print("Finalizing with Custom Header")
-            self.code=self.header[-1]+f" style=\"{self._buildStyle()} {self._buildOptions()}>"+self.text+self.footer
+            self.code=self.header[-1]+f" style=\"{self._buildStyle()}\" {self._buildOptions()}>"+self.text+self.footer
         else:
             print("Finalizing with default header")
             self.code=self.header+self.text+self.footer

@@ -50,7 +50,7 @@ class Textbox(htmlWidget):
         final=""
         if "style" in self.options:
             for i in self.options:
-                if i.__includes__("style"):self.style=i.split("style=")[1].split(";")  # type: ignore
+                if i.__includes__("style"):self.style=i.split("style=")[1].split(";")[0]  # type: ignore
                 else:continue
         del self.options[self.options.index("style")]
         for i in final:final+=i+" "
