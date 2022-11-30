@@ -16,3 +16,7 @@ class htmlParent(object):
         Save a value from child to parent class
         '''
         self.inf.append(value)
+class htmlObject(object):
+    '''
+    HTML Object Class (For suspended strings)
+    '''

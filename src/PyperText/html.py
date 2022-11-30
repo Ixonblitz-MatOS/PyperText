@@ -6,7 +6,7 @@ import platform #(.path.exists() to check if the path they want exists,)
 import os as oss
 import webbrowser
 from io import TextIOWrapper
-from htmlWidget import htmlWidget,htmlParent#base class for widgets
+from PyperText.htmlWidget import htmlWidget,htmlParent#base class for widgets
 os=platform.system()
 if (os.__contains__("Linux")):os="Linux"
 elif(os.__contains__("Darwin")):os="MacOS"
@@ -85,7 +85,7 @@ class Script(htmlWidget,htmlParent):
         final:str=""
         for i in self.scripts:final+=f"<script>{open(i,'r').read()}</script>\n"
         return final
-    def createAndWrite(self,open:bool=False)->None:
+    def createAndWrite(self,opens:bool=False)->None:
         '''
         Create and write the HTML for the script and write to the file.
         '''
@@ -96,6 +96,6 @@ class Script(htmlWidget,htmlParent):
             self.final+=self.header+open(self.stylesheet,'r').read()+"\n"+self.text+self._buildScripts()+self.footer
         self.fp.write(self.final)
         self.fp.close()
-        if open:webbrowser.open_new_tab('file://'+oss.path.abspath(self.file))
+        if opens:webbrowser.open_new_tab('file://'+oss.path.abspath(self.file))
         
 

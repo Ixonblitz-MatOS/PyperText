@@ -1,4 +1,4 @@
-from htmlWidget import htmlWidget
+from PyperText.htmlWidget import htmlWidget
 class Entry(htmlWidget):
     '''
     HTML Input Textbox Class derived from htmlWidget
@@ -155,7 +155,7 @@ class NumberEntry(htmlWidget):
         Set the value of the entry
         '''
         try:
-            if val.isnumeric():self.options.append(f"value=\"{str(val)}\"")
+            if str(val).isnumeric():self.options.append(f"value=\"{str(val)}\"")
             else:print("Invalid number for the value, no action taken")
         except:pass
         self.CustomHeader=True

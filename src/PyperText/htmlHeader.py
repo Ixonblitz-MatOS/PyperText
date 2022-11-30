@@ -1,4 +1,5 @@
-from htmlWidget import htmlWidget
+from PyperText.tools import SuspendedString
+from PyperText.htmlWidget import htmlWidget
 class Header(htmlWidget):
     '''
     HTML Header Class derived from htmlWidget
@@ -22,11 +23,12 @@ class Header(htmlWidget):
         '''
         self.options.append(option)
         self.CustomHeader=True
-    def setText(self,text:str)->None:
+    def setText(self,text:str|SuspendedString)->None:
         '''
         Set the Text of the header
         '''
-        self.text=text
+        if type(text) is str: self.text=text
+        else: self.text=text.form() #type:ignore
     def changeHeaderSize(self,size:int):
         '''
         Changes the size of the header

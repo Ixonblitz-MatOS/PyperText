@@ -1,4 +1,5 @@
-from htmlWidget import htmlWidget
+from PyperText.htmlWidget import htmlWidget
+from PyperText.tools import SuspendedString
 class Button(htmlWidget):
     '''
     HTML Button Class derived from htmlWidget
@@ -12,11 +13,12 @@ class Button(htmlWidget):
         self.CustomHeader:bool=False
         self.requiredScripts: list[str]=list[str]()
         self.style: list[str]=list[str]()
-    def setText(self,text:str)->None:
+    def setText(self,text:str|SuspendedString)->None:
         '''
         Set the Text of the Button
         '''
-        self.text=text
+        if type(text) is str:self.text=text
+        else:self.text=text.form() #type:ignore
     def setOnClick(self,functionname:str,function:str)->None:
         '''
         Set the click function of the Button

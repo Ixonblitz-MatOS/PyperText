@@ -67,4 +67,4 @@ class Image(htmlWidget):
             self.code=self.header[-1]+ f"style=\"{self._buildStyle()}\" {self._buildOptions()}>"
         else:
             print("Finalizing with Default Header")
-            self.code=self.header[-1]+f" alt=\"{self.text}\"src=\"{self.image}\" width=\"{getWidth(self.image)}\" height=\"{self.image}\">"
+            self.code=self.header[-1]+f" alt=\"{self.text}\"src=\"{self.image}\" width=\"{getWidth(self.image)}\" height=\"{getHeight(self.image)}\">"
