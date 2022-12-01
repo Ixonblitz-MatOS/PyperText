@@ -1,8 +1,10 @@
-from htmlWidget import htmlWidget
+from .htmlWidget import htmlWidget
 class Textbox(htmlWidget):
     '''
     HTML Textbox Class derived from htmlWidget
     '''
+    code=""
+    type="Textbox"
     def __init__(self) -> None:
         self.options:list[str]=list[str]()
         self.style:list[str]=list[str]()
@@ -52,8 +54,8 @@ class Textbox(htmlWidget):
             for i in self.options:
                 if i.__includes__("style"):self.style=i.split("style=")[1].split(";")[0]  # type: ignore
                 else:continue
-        del self.options[self.options.index("style")]
-        for i in final:final+=i+" "
+            del self.options[self.options.index("style")]
+        for i in self.options:final+=i+" "
         return final
     def _buildStyle(self)->str:
         final=""
@@ -64,8 +66,11 @@ class Textbox(htmlWidget):
         Finalizes code to self.code
         '''
         if self.CustomHeader:
-            print("Finalizing with Custom Header")
-            self.code=self.header[-1]+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
+            print("Textbox: Creating Textbox with Custom Header")
+            if self._buildStyle()=='' or self._buildStyle()==' ':self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"+self.text+self.footer
+            else:self.code=self.header.rstrip(self.header[-1])+" "+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
         else:
-            print("Finalizing with Default Header")
+            print("Textbox: Creating Textbox with Default Header")
             self.code=self.header+self.text+self.footer
+
+if __name__=="__main__":pass

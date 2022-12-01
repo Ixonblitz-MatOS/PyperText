@@ -1,6 +1,8 @@
-from PyperText.htmlWidget import htmlWidget
-from PyperText.tools import isUrl,SuspendedString
+from .htmlWidget import htmlWidget
+from .tools import isUrl,SuspendedString
 class Link(htmlWidget):
+    code=""
+    type="Link"
     def __init__(self) -> None:
         self.link=""
         self.text=""
@@ -23,7 +25,7 @@ class Link(htmlWidget):
                 self.options.append(f"href=\"{link}\"")
                 self.CustomHeader:bool=True
                 return None
-            print("Url is not valid, to use anyway set force equal to True")
+            print("Link: Url is not valid, to use anyway set force equal to True")
     def setText(self,text:str|SuspendedString)->None:
         '''
         Add text to show for the Link
@@ -53,6 +55,37 @@ class Link(htmlWidget):
         '''
         t: list[str]=["_blank","_self","_parent","_top"]
         if target not in t:
-            print("Target is either incorrect or not implemented(if you used an iframe name)")
+            print("Link: Target is either incorrect or not implemented(if you used an iframe name)")
             return None
         self.options.append(f"target=\"{target}\"")
+    def _buildStyle(self)->str:
+        final=""
+        if "style" in self.options:
+            for i in self.options:
+                if i.__includes__("style"):
+                    self.style=i.split("style=")[1].split(";")  # type: ignore
+                    for i in self.style:i+=";"
+                else:continue
+            del self.options[self.options.index("style")]
+        for i in final:
+            if i.endswith(";"):final+=i
+            else:final+=i+";"
+        return final
+    def _buildOptions(self)->None:
+        '''
+        build text to alt
+        '''
+        self.options.append(f"alt=\"{self.text}\"")
+    def finalize(self)->None:
+        '''
+        Finalize the Image to self.code
+        '''
+        if self.CustomHeader:
+            print("Link: Creating Link with Custom Header")
+            if self._buildStyle() =="" or self._buildStyle==" ":self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"
+            else:self.code=self.header.rstrip(self.header[-1])+ f"style=\"{self._buildOptions()}\" {self._buildOptions()}>"
+        else:
+            print("Link: Creating Link with Default Header")
+            self.code=self.header+self.text+self.footer
+
+if __name__=="__main__":pass

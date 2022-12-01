@@ -1,17 +1,18 @@
-from PyperText.tools import SuspendedString
-from PyperText.htmlWidget import htmlWidget
+from .tools import SuspendedString
+from .htmlWidget import htmlWidget
 class Header(htmlWidget):
     '''
     HTML Header Class derived from htmlWidget
     '''
     code:str=""
+    type="Header"
     def __init__(self,size:int) -> None:
         '''
         size:int=0< && >7
         '''
-        if size<0 or size>7:print("The size was incorrectly entered and will use 3 as the default")
+        if size<0 or size>7:print("Header: The size was incorrectly entered and will use 3 as the default")
         self.size=size
-        self.header:str=f"<h{str(size)}>"
+        self.header:str=f"<h{str(size)} >"
         self.text:str=""
         self.options:list[str]=list[str]()
         self.style:list[str]=list[str]()
@@ -59,8 +60,11 @@ class Header(htmlWidget):
         final:str=""
         if "style" in self.options:
             for i in self.options:
-                if i.__includes__("style"):self.style=i.split("style=")[1].split(";")[0]  # type: ignore
+                if i.__includes__("style"):
+                    self.style=i.split("style=")[1].split(";")  # type: ignore
+                    for i in self.style:i+=";"
                 else:continue
+            del self.options[self.options.index("style")]
         for i in self.options:final+=i+" "
         return final
     def _buildStyle(self)->str:
@@ -71,8 +75,15 @@ class Header(htmlWidget):
         return final
     def finalize(self)->None:
         if self.CustomHeader:
-            print("Finalizing with Custom Header")
-            self.code=self.header[-1]+f" style=\"{self._buildStyle()}\" {self._buildOptions()}>"+self.text+self.footer
+            print("Header: Creating Header with Custom Header")
+            if self._buildStyle()=="" or self._buildStyle()==" ":
+                print("Header: Style is empty, leaving out.")
+                self.code=self.header.rstrip(self.header[-1])+self._buildOptions()+">"+self.text+self.footer
+                return None
+            else:self.code=self.header.rstrip(self.header[-1])+f" style=\"{self._buildStyle()}\" {self._buildOptions()}>"+self.text+self.footer
         else:
-            print("Finalizing with default header")
+            print("Header: Creating Header with default header")
             self.code=self.header+self.text+self.footer
+
+
+if __name__=="__main__":pass

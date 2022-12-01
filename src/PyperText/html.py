@@ -6,7 +6,7 @@ import platform #(.path.exists() to check if the path they want exists,)
 import os as oss
 import webbrowser
 from io import TextIOWrapper
-from PyperText.htmlWidget import htmlWidget,htmlParent#base class for widgets
+from .htmlWidget import htmlWidget,htmlParent#base class for widgets
 os=platform.system()
 if (os.__contains__("Linux")):os="Linux"
 elif(os.__contains__("Darwin")):os="MacOS"
@@ -60,17 +60,18 @@ class Script(htmlWidget,htmlParent):
         if(oss.path.exists(script) and script.endswith(".js")):self.scripts.append(script)
         else:
             if force:self.scripts.append(script)
-            else:print("The file does not exist or does not end in .js, No action taken, to add the script anyway set force equal to True")
+            else:print("Script: The file does not exist or does not end in .js, No action taken, to add the script anyway set force equal to True")
     def addCustomHeader(self,options:str)->None:
         '''
         Changes the default header
         '''
-        self.header=f"<!DOCTYPE html>\n<html {options}>"
+        self.header=f"<!DOCTYPE html>\n<html {options}>\n"
         self.CustomHeader=True
     def addWidget(self,wid:htmlWidget)->None:
         '''
         Adds widget to script
         '''
+        print(f"Script: Adding Widget({wid.type})")
         self.text+=wid.code+"\n"
     def setStyleSheet(self,sheet:str)->None:
         '''
@@ -91,11 +92,13 @@ class Script(htmlWidget,htmlParent):
         '''
         if self.CustomHeader:print("Creating With Custom Header...")
         else:print("Creating with Default Header")
-        if self.stylesheet is None:self.final+=self.header+self.text+self.footer
+        if self.stylesheet == None:self.final+=self.header+self.text+self._buildScripts()+self.footer
         else:
             self.final+=self.header+open(self.stylesheet,'r').read()+"\n"+self.text+self._buildScripts()+self.footer
         self.fp.write(self.final)
         self.fp.close()
         if opens:webbrowser.open_new_tab('file://'+oss.path.abspath(self.file))
         
+        
 
+if __name__=="__main__":pass

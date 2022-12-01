@@ -1,10 +1,11 @@
-from PyperText.htmlWidget import htmlWidget
-from PyperText.tools import SuspendedString
+from .htmlWidget import htmlWidget
+from .tools import SuspendedString
 class Button(htmlWidget):
     '''
     HTML Button Class derived from htmlWidget
     '''
     code:str=""
+    type="Button"
     def __init__(self) -> None:
         self.header:str="<button>"
         self.text:str=""
@@ -30,14 +31,14 @@ class Button(htmlWidget):
         '''
         Set the color of the text on the Button
         '''
-        if color.endswith(";"):color=color[-1]
+        if color.endswith(";"):color=color.rstrip(color[-1])
         self.style.append(f"color:{color};")
         self.CustomHeader=True
     def setBackgroundColor(self,color:str)->None:
         '''
         Set the color of the background of the Button
         '''
-        if color.endswith(";"):color=color[-1]
+        if color.endswith(";"):color=color.rstrip(color[-1])
         self.style.append(f"background-color:{color};")
         self.CustomHeader=True
     def setID(self,ids:str)->None:
@@ -52,7 +53,7 @@ class Button(htmlWidget):
             for i in self.options:
                 if i.__includes__("style"):self.style=i.split("style=")[1].split(";")[0]  # type: ignore
                 else:continue
-        del self.options[self.options.index("style")]
+            del self.options[self.options.index("style")]
         for i in self.options:final+=i+" "
         s:str="style=\""
         for a in self.style:
@@ -60,12 +61,15 @@ class Button(htmlWidget):
             if a.__contains__("\""):a.replace("\"","'")#prevent errors from occurring 
             s+=a
         s+="\""
-        final+=" "+s
+        if not s=="style=\"\"":final+=" "+s
         return final
     def finalize(self)->None:
         '''
         Update the Button Code Variable
         '''
-        if self.CustomHeader:print("Creating Button with Custom Header")
-        else:print("Creating Button with Default Header")
-        self.code=self.header[-1]+" "+self._finalizeoptions()+">"+self.text+self.footer
+        if self.CustomHeader:print("Button: Creating Button with Custom Header")
+        else:print("Button: Creating Button with Default Header")
+        self.code=self.header.rstrip(self.header[-1])+" "+self._finalizeoptions()+">"+self.text+self.footer
+
+
+if __name__=="__main__":pass

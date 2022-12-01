@@ -1,8 +1,10 @@
-from PyperText.htmlWidget import htmlWidget
+from .htmlWidget import htmlWidget
 class Entry(htmlWidget):
     '''
     HTML Input Textbox Class derived from htmlWidget
     '''
+    code:str=""
+    type="Entry"
     def __init__(self)->None:
         self.options:list[str]=list[str]()
         self.style:list[str]=list[str]()
@@ -64,7 +66,7 @@ class Entry(htmlWidget):
             for i in self.options:
                 if i.__includes__("style"):self.style=i.split("style=")[1].split(";")  # type: ignore
                 else:continue
-        del self.options[self.options.index("style")]
+            del self.options[self.options.index("style")]
         for i in self.options:final+=i+" "
         return final    
     def _buildStyle(self)->str:
@@ -103,10 +105,11 @@ class Entry(htmlWidget):
         Finalize the code to self.code
         '''
         if self.CustomHeader:
-            print("Finalizing with Custom Header")
-            self.code=self.header[-1]+" "+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
+            print("Entry: Creating Entry with Custom Header")
+            if self._buildStyle()=="" or self._buildStyle()==" ":self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"+self.text+self.footer
+            else:self.code=self.header.rstrip(self.header[-1])+" "+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
         else:
-            print("Finalizing with Default Header")
+            print("Entry: Creating Entry with Default Header")
             self.code=self.header+self.text+self.footer
 class NumberEntry(htmlWidget):
     '''
@@ -156,7 +159,7 @@ class NumberEntry(htmlWidget):
         '''
         try:
             if str(val).isnumeric():self.options.append(f"value=\"{str(val)}\"")
-            else:print("Invalid number for the value, no action taken")
+            else:print("NumberEntry: Invalid number for the value, no action taken")
         except (Exception):pass
         self.CustomHeader=True
     def setHeight(self,height:str|int)->None:
@@ -177,7 +180,7 @@ class NumberEntry(htmlWidget):
             for i in self.options:
                 if i.__includes__("style"):self.style=i.split("style=")[1].split(";")[0]  # type: ignore
                 else:continue
-        del self.options[self.options.index("style")]
+            del self.options[self.options.index("style")]
         for i in self.options:final+=i+" "
         return final    
     def _buildStyle(self)->str:
@@ -189,8 +192,13 @@ class NumberEntry(htmlWidget):
         Finalize the code to self.code
         '''
         if self.CustomHeader:
-            print("Finalizing with Custom Header")
-            self.code=self.header[-1]+" "+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
+            print("NumberEntry: Creating Entry with Custom Header")
+            if self._buildStyle()=="" or self._buildStyle()== " ":
+                self.code=self.header.rstrip(self.header[-1])+" "+self._buildOptions()+">"+self.text+self.footer
+                return None
+            self.code=self.header.rstrip(self.header[-1])+" "+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
         else:
-            print("Finalizing with Default Header")
+            print("NumberEntry: Creating Entry with Default Header")
             self.code=self.header+self.text+self.footer
+
+if __name__=="__main__":pass
