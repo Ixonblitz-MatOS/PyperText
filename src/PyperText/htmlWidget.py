@@ -21,3 +21,4 @@ class htmlObject(object):
     '''
     HTML Object Class (For suspended strings)
     '''
+    type:str=""

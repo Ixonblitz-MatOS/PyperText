@@ -19,6 +19,6 @@ def abbreviate(full:str,abbrev:str)->SuspendedString:
     Abbreviate Text
     '''
     return SuspendedString(f"<abbrev title=\"{full}\">",abbrev,"</abbrev>")
-
-
+def newline()->str:return "<br>"
+def code(code:str)->str:return f"<code>{code}</code>"
 if __name__=="__main__":pass
