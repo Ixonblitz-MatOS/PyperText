@@ -1,4 +1,5 @@
 from .htmlWidget import htmlWidget
+from typing import overload
 from .tools import exists,isUrl,getHeight,getWidth
 class Image(htmlWidget):
     '''
@@ -29,6 +30,19 @@ class Image(htmlWidget):
         '''
         if(exists(image) or isUrl(image)):self.image=image
         self.CustomHeader=True
+    @overload
+    def setSize(self,size:tuple[int|str])->None:
+        '''
+        Set image size (width,height)
+        '''
+        try:self.options.append(f"width=\"{str(size[0])}\" height=\"{str(size[1])}\"")
+        except IndexError:print("Error reading the size, aborting")
+    @overload
+    def setSize(self,width:int|str,height:int|str)->None:
+        '''
+        Set image Size
+        '''
+        self.setSize((width,height))
     def _buildImage(self)->None:
         '''
         Builds image to options

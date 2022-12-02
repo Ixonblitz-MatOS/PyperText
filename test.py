@@ -9,7 +9,7 @@ from os import system
 system("Cls")
 #Make sure logs all fit same memo: Creating {Widget} with {Custom|Default} Header
 #Working:Entry(Reg,Number),Script(Could look better),Button, Header(1-6), Image,italics,bold,underline, Textbox
-#Broken:
+#Broken:None
 myScript=Script("test.html")
 myScript.addCustomHeader("lang=\"en\"")
 myEntry=Entry()
@@ -49,6 +49,7 @@ myHeader6.setID("H6")
 myHeader6.finalize()
 myImage=Image("test.jpg")
 myImage.setAlternativeText("Test Image")
+myImage.setSize((500,500))
 myImage.finalize()
 myText=Textbox()
 myText.setID("txt")
