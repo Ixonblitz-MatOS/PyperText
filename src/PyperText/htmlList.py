@@ -1,5 +1,5 @@
 from .htmlWidget import htmlWidget,htmlObject
-from typing import Any,Literal,overload
+from typing import Any,overload
 #if[if]==if[if[if][if]]-=[if.iff[iff[if]]]
 class Member(htmlObject):
     '''
@@ -14,8 +14,15 @@ class Member(htmlObject):
         self.value=mem.split(">"[1].split("<")[0])
         self.style:list[str]=list[str]()
         self.options:list[str]=list[str]()
-        if "style=" in self.header:self.options=self.header.split("style\"")[1].rstrip(self.header.split("style\"")[1][-1]).split(";")#<tag style="">
-
+        if "style=" in self.header:
+            self.style=self.header.split("style\"")[1].rstrip(self.header.split("style\"")[1][-1]).split(";")#<tag style="">
+            self.header=self.header.split("style=")[0]+">"
+            if self.header!=f"<{self.header.split('<')[1].split(' ')[0]} >":
+                #there are options
+                self.options=self.header.split(">")[0].split("<")[1].split(" ")[2]
+                #<T as="" aa="">->['<T as="" aa=""','']->['','T','as="" aa=""','']
+            else:self.header=f"<{self.header.split('>')[0].split('<')[1].split(' ')[1]} >"#no options
+        else:pass#FINISH
     @overload
     def __init__(self)->None:
         pass
