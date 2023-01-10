@@ -5,8 +5,10 @@ Python HTML writer for beginners
 import platform #(.path.exists() to check if the path they want exists,)
 import os as oss
 import webbrowser
+import ultraimport
 from io import TextIOWrapper
-from .htmlWidget import htmlWidget,htmlParent#base class for widgets
+baseWidget = ultraimport('__dir__/htmlWidget.py', 'baseWidget')
+htmlParent = ultraimport('__dir__/htmlWidget.py','htmlParent')
 os=platform.system()
 if (os.__contains__("Linux")):os="Linux"
 elif(os.__contains__("Darwin")):os="MacOS"
