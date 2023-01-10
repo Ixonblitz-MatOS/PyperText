@@ -1,4 +1,5 @@
-from .htmlWidget import htmlWidget
+import ultraimport
+htmlWidget = ultraimport('__dir__/htmlWidget.py','htmlWidget')
 class Entry(htmlWidget):
     '''
     HTML Input Textbox Class derived from htmlWidget

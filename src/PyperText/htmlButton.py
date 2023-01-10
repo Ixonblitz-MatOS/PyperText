@@ -1,5 +1,6 @@
-from .htmlWidget import htmlWidget
-from .tools import SuspendedString
+import ultraimport
+htmlWidget = ultraimport('__dir__/htmlWidget.py','htmlWidget')
+SuspendedString = ultraimport('__dir__/tools.py','SuspendedString')
 class Button(htmlWidget):
     '''
     HTML Button Class derived from htmlWidget
