@@ -1,4 +1,6 @@
-from .htmlWidget import htmlWidget
+# pylint: disable=locally-disabled, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
+from ultraimport.ultraimport import ultraimport
+htmlWidget=ultraimport('__dir__/htmlWidget.py','htmlWidget')
 class Textbox(htmlWidget):
     '''
     HTML Textbox Class derived from htmlWidget

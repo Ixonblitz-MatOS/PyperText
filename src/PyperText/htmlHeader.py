@@ -1,5 +1,8 @@
-from .tools import SuspendedString
-from .htmlWidget import htmlWidget
+# pylint: disable=locally-disabled, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
+
+from ultraimport.ultraimport import ultraimport
+SuspendedString=ultraimport('__dir__/tools.py','SuspendedString')
+htmlWidget=ultraimport('__dir__/htmlWidget.py','htmlWidget')
 class Header(htmlWidget):
     '''
     HTML Header Class derived from htmlWidget

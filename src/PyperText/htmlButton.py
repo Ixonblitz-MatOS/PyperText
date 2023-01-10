@@ -1,4 +1,5 @@
-import ultraimport
+# pylint: disable=locally-disabled, super-init-not-called, unspecified-encoding
+from ultraimport.ultraimport import ultraimport
 htmlWidget = ultraimport('__dir__/htmlWidget.py','htmlWidget')
 SuspendedString = ultraimport('__dir__/tools.py','SuspendedString')
 class Button(htmlWidget):

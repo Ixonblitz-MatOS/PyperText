@@ -1,14 +1,16 @@
 '''
 Python HTML writer for beginners
 '''
+# pylint: disable=locally-disabled, super-init-not-called, unspecified-encoding
 #module imports
 import platform #(.path.exists() to check if the path they want exists,)
 import os as oss
 import webbrowser
-import ultraimport
+from ultraimport.ultraimport import ultraimport
 from io import TextIOWrapper
 baseWidget = ultraimport('__dir__/htmlWidget.py', 'baseWidget')
 htmlParent = ultraimport('__dir__/htmlWidget.py','htmlParent')
+htmlWidget = ultraimport('__dir__/htmlWidget/py','htmlWidget')
 os=platform.system()
 if (os.__contains__("Linux")):os="Linux"
 elif(os.__contains__("Darwin")):os="MacOS"

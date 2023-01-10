@@ -1,6 +1,9 @@
-from .htmlWidget import htmlWidget
-from typing import overload
-from .tools import exists,isUrl,getHeight,getWidth
+# pylint: disable=locally-disabled, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
+
+from ultraimport.ultraimport import ultraimport
+from typing import overload,Callable
+htmlWidget=ultraimport('__dir__/htmlWidget.py','htmlWidget')
+exists,isUrl,getHeight,getWidth=ultraimport('__dir__/tools.py',{'exists':Callable,'isUrl':Callable,'getHeight':Callable,'getWidth':Callable})
 class Image(htmlWidget):
     '''
     HTML Image Class derived from htmlWidget
@@ -79,7 +82,7 @@ class Image(htmlWidget):
             print("Image: Creating Image with Custom Header")
             self._buildImage()
             self._buildText()
-            if self._buildStyle() =="" or self._buildStyle==" ":self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"
+            if (self._buildStyle() =="" or self._buildStyle()==" "):self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"
             else:self.code=self.header.rstrip(self.header[-1])+ f"style=\"{self._buildStyle()}\" {self._buildOptions()}>"
         else:
             print("Image: Creating Image with Default Header")

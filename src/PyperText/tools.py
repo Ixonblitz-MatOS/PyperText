@@ -1,3 +1,5 @@
+# pylint: disable=locally-disabled, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init,import-error
+
 import os
 import cv2#type:ignore
 from validators import url as urls#type:ignore

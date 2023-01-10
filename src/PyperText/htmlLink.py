@@ -1,5 +1,11 @@
-from .htmlWidget import htmlWidget
-from .tools import isUrl,SuspendedString
+# pylint: disable=locally-disabled, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
+
+from ultraimport.ultraimport import ultraimport
+from typing import Any,Type,Callable
+Class=Any|Type[type]
+htmlWidget=ultraimport('__dir__/htmlWidget.py','htmlWidget')
+SuspendedString,isUrl=ultraimport('__dir__/tools.py',{'SuspendedString':Class,"isUrl":Callable})
+
 class Link(htmlWidget):
     code=""
     type="Link"
@@ -82,7 +88,7 @@ class Link(htmlWidget):
         '''
         if self.CustomHeader:
             print("Link: Creating Link with Custom Header")
-            if self._buildStyle() =="" or self._buildStyle==" ":self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"
+            if self._buildStyle() =="" or self._buildStyle()==" ":self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"
             else:self.code=self.header.rstrip(self.header[-1])+ f"style=\"{self._buildOptions()}\" {self._buildOptions()}>"
         else:
             print("Link: Creating Link with Default Header")
