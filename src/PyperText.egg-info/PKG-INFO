@@ -1,0 +1,34 @@
+Metadata-Version: 2.1
+Name: PyperText
+Version: 0.0.7
+Summary: "Package made to script HTML"
+Home-page: https://github.com/Ixonblitz-MatOS/htmlWriter
+Author: Ixonblitz-MatOS
+Author-email: gavellmathew@gmail.com
+License: UNKNOWN
+Platform: UNKNOWN
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: Microsoft :: Windows :: Windows 10
+Classifier: Operating System :: Microsoft :: Windows :: Windows 11
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Operating System :: MacOS
+Classifier: Topic :: Software Development :: Code Generators
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# html
+python html writer with CSS and custom JS support
+
+USE:<br>
+<code>from PyperText.html import Script</code><br>
+<code>from PyperText.htmlButton import Button</code><br>
+<code>#from PyperText.html{WIDGET} import WIDGET; ex from PyperText.htmlEntry import Entry; variations shared in file</code><br>
+<code>myScript=Script("myfile.html")</code><br>
+<code>myButton=Button()</code><br>
+<code>myButton.setText("This is a button")</code><br>
+<code>myScript.addWidget(myButton)</code><br>
+<code>myScript.createAndWrite()</code><br>
+
+
