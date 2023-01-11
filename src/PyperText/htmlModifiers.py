@@ -1,4 +1,7 @@
-# pylint: disable=locally-disabled, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
+"""
+Modifiers
+"""
+# pylint: disable=locally-disabled, invalid-name, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
 
 from ultraimport.ultraimport import ultraimport
 SuspendedString=ultraimport('__dir__/tools.py','SuspendedString')
@@ -23,6 +26,15 @@ def abbreviate(full:str,abbrev:str)->SuspendedString:
     Abbreviate Text
     '''
     return SuspendedString(f"<abbrev title=\"{full}\">",abbrev,"</abbrev>")
-def newline()->str:return "<br>"
-def code(a:str)->str:return f"<code>{a}</code>"
-if __name__=="__main__":pass
+def newline()->str:
+    """
+    returns newline tag
+    """
+    return "<br>"
+def code(a:str)->str:
+    """
+    return code object tag
+    """
+    return f"<code>{a}</code>"
+if __name__=="__main__":
+    pass

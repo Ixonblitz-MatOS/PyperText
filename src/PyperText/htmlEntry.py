@@ -1,4 +1,7 @@
-# pylint: disable=locally-disabled, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
+"""
+Entry Widget for PyperText
+"""
+# pylint: disable=locally-disabled,invalid-name, line-too-long, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
 from ultraimport.ultraimport import ultraimport
 htmlWidget = ultraimport('__dir__/htmlWidget.py','htmlWidget')
 class Entry(htmlWidget):
@@ -66,14 +69,20 @@ class Entry(htmlWidget):
         final=""
         if "style" in self.options:
             for i in self.options:
-                if i.__includes__("style"):self.style=i.split("style=")[1].split(";")  # type: ignore
+                if i.__includes__("style"):
+                    self.style=i.split("style=")[1].split(";")  # type: ignore
                 else:continue
             del self.options[self.options.index("style")]
-        for i in self.options:final+=i+" "
-        return final    
+        for i in self.options:
+            final+=i+" "
+        return final
     def _buildStyle(self)->str:
+        """
+        Build style for finalize
+        """
         final=""
-        for i in final:final+=i
+        for i in final:
+            final+=i
         return final
     def setType(self,types:str)->None:
         '''
@@ -108,8 +117,10 @@ class Entry(htmlWidget):
         '''
         if self.CustomHeader:
             print("Entry: Creating Entry with Custom Header")
-            if self._buildStyle()=="" or self._buildStyle()==" ":self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"+self.text+self.footer
-            else:self.code=self.header.rstrip(self.header[-1])+" "+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
+            if self._buildStyle()=="" or self._buildStyle()==" ":
+                self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"+self.text+self.footer
+            else:
+                self.code=self.header.rstrip(self.header[-1])+" "+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
         else:
             print("Entry: Creating Entry with Default Header")
             self.code=self.header+self.text+self.footer
@@ -160,9 +171,11 @@ class NumberEntry(htmlWidget):
         Set the value of the entry
         '''
         try:
-            if str(val).isnumeric():self.options.append(f"value=\"{str(val)}\"")
+            if str(val).isnumeric():
+                self.options.append(f"value=\"{str(val)}\"")
             else:print("NumberEntry: Invalid number for the value, no action taken")
-        except (Exception):pass
+        except Exception:
+            pass
         self.CustomHeader=True
     def setHeight(self,height:str|int)->None:
         '''
@@ -180,14 +193,17 @@ class NumberEntry(htmlWidget):
         final=""
         if "style" in self.options:
             for i in self.options:
-                if i.__includes__("style"):self.style=i.split("style=")[1].split(";")[0]  # type: ignore
+                if i.__includes__("style"):
+                    self.style=i.split("style=")[1].split(";")[0]  # type: ignore
                 else:continue
             del self.options[self.options.index("style")]
-        for i in self.options:final+=i+" "
-        return final    
+        for i in self.options:
+            final+=i+" "
+        return final
     def _buildStyle(self)->str:
         final=""
-        for i in final:final+=i
+        for i in final:
+            final+=i
         return final
     def finalize(self)->None:
         '''
@@ -203,4 +219,5 @@ class NumberEntry(htmlWidget):
             print("NumberEntry: Creating Entry with Default Header")
             self.code=self.header+self.text+self.footer
 
-if __name__=="__main__":pass
+if __name__=="__main__":
+    pass

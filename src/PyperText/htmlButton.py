@@ -1,4 +1,7 @@
-# pylint: disable=locally-disabled, super-init-not-called, unspecified-encoding
+"""
+Button Widget for PyperText
+"""
+# pylint: disable=locally-disabled, invalid-name, line-too-long, super-init-not-called, unspecified-encoding
 from ultraimport.ultraimport import ultraimport
 htmlWidget = ultraimport('__dir__/htmlWidget.py','htmlWidget')
 SuspendedString = ultraimport('__dir__/tools.py','SuspendedString')
@@ -20,8 +23,10 @@ class Button(htmlWidget):
         '''
         Set the Text of the Button
         '''
-        if type(text) is str:self.text=text
-        else:self.text=text.form() #type:ignore
+        if isinstance(text,str):
+            self.text=text
+        else:
+            self.text=text.form() #type:ignore
     def setOnClick(self,functionname:str,function:str)->None:
         '''
         Set the click function of the Button
@@ -33,14 +38,16 @@ class Button(htmlWidget):
         '''
         Set the color of the text on the Button
         '''
-        if color.endswith(";"):color=color.rstrip(color[-1])
+        if color.endswith(";"):
+            color=color.rstrip(color[-1])
         self.style.append(f"color:{color};")
         self.CustomHeader=True
     def setBackgroundColor(self,color:str)->None:
         '''
         Set the color of the background of the Button
         '''
-        if color.endswith(";"):color=color.rstrip(color[-1])
+        if color.endswith(";"):
+            color=color.rstrip(color[-1])
         self.style.append(f"background-color:{color};")
         self.CustomHeader=True
     def setID(self,ids:str)->None:
@@ -53,25 +60,34 @@ class Button(htmlWidget):
         final:str=""
         if "style" in self.options:
             for i in self.options:
-                if i.__includes__("style"):self.style=i.split("style=")[1].split(";")[0]  # type: ignore
-                else:continue
+                if i.__includes__("style"):
+                    self.style=i.split("style=")[1].split(";")[0]  # type: ignore
+                else:
+                    continue
             del self.options[self.options.index("style")]
-        for i in self.options:final+=i+" "
+        for i in self.options:
+            final+=i+" "
         s:str="style=\""
         for a in self.style:
-            if not a.endswith(";"):a+=";"
-            if a.__contains__("\""):a.replace("\"","'")#prevent errors from occurring 
+            if not a.endswith(";"):
+                a+=";"
+            if "\"" in a:
+                a.replace("\"","'")#prevent errors from occurring
             s+=a
         s+="\""
-        if not s=="style=\"\"":final+=" "+s
+        if  s!="style=\"\"":
+            final+=" "+s
         return final
     def finalize(self)->None:
         '''
         Update the Button Code Variable
         '''
-        if self.CustomHeader:print("Button: Creating Button with Custom Header")
-        else:print("Button: Creating Button with Default Header")
+        if self.CustomHeader:
+            print("Button: Creating Button with Custom Header")
+        else:
+            print("Button: Creating Button with Default Header")
         self.code=self.header.rstrip(self.header[-1])+" "+self._finalizeoptions()+">"+self.text+self.footer
 
 
-if __name__=="__main__":pass
+if __name__=="__main__":
+    pass

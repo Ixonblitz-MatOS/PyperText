@@ -1,12 +1,18 @@
-# pylint: disable=locally-disabled, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
-
-from ultraimport.ultraimport import ultraimport
+"""
+Link object
+"""
+# pylint: disable=locally-disabled, line-too-long,invalid-name, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
 from typing import Any,Type,Callable
+from ultraimport.ultraimport import ultraimport
+
 Class=Any|Type[type]
 htmlWidget=ultraimport('__dir__/htmlWidget.py','htmlWidget')
 SuspendedString,isUrl=ultraimport('__dir__/tools.py',{'SuspendedString':Class,"isUrl":Callable})
 
 class Link(htmlWidget):
+    """
+    Link object for PyperText
+    """
     code=""
     type="Link"
     def __init__(self) -> None:
@@ -36,7 +42,8 @@ class Link(htmlWidget):
         '''
         Add text to show for the Link
         '''
-        if type(text) is str:self.text:str=text
+        if isinstance(text,str):
+            self.text:str=text
         else:self.text=text.form()#type:ignore
     def setTextColor(self,color:str)->None:
         '''
@@ -70,11 +77,13 @@ class Link(htmlWidget):
             for i in self.options:
                 if i.__includes__("style"):
                     self.style=i.split("style=")[1].split(";")  # type: ignore
-                    for i in self.style:i+=";"
+                    for i in self.style:
+                        i+=";"
                 else:continue
             del self.options[self.options.index("style")]
         for i in final:
-            if i.endswith(";"):final+=i
+            if i.endswith(";"):
+                final+=i
             else:final+=i+";"
         return final
     def _buildOptions(self)->None:
@@ -88,10 +97,13 @@ class Link(htmlWidget):
         '''
         if self.CustomHeader:
             print("Link: Creating Link with Custom Header")
-            if self._buildStyle() =="" or self._buildStyle()==" ":self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"
-            else:self.code=self.header.rstrip(self.header[-1])+ f"style=\"{self._buildOptions()}\" {self._buildOptions()}>"
+            if self._buildStyle() =="" or self._buildStyle()==" ":
+                self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"
+            else:
+                self.code=self.header.rstrip(self.header[-1])+ f"style=\"{self._buildOptions()}\" {self._buildOptions()}>"
         else:
             print("Link: Creating Link with Default Header")
             self.code=self.header+self.text+self.footer
 
-if __name__=="__main__":pass
+if __name__=="__main__":
+    pass

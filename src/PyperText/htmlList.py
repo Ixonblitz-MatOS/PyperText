@@ -1,6 +1,9 @@
-# pylint: disable=locally-disabled, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
-from ultraimport.ultraimport import ultraimport
+"""
+List objects
+"""
+# pylint: disable=locally-disabled, line-too-long, invalid-name, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
 from typing import Any,Type
+from ultraimport.ultraimport import ultraimport
 Class=Any|Type[type]
 htmlWidget,htmlObject=ultraimport('__dir__/htmlWidget.py',{"htmlWidget":Class,"htmlObject":Class})
 #if[if]==if[if[if][if]]-=[if.iff[iff[if]]]
@@ -33,8 +36,16 @@ class List(htmlWidget):
     '''
     code=""
     type="List"
-    def _ret(self,val:Any|str)->Any:return val
-    def _lst(self,val:str)->str:return f"<li>{val}</li>"
+    def _ret(self,val:Any|str)->Any:
+        """
+        return same val
+        """
+        return val
+    def _lst(self,val:str)->str:
+        """
+        return list from string
+        """
+        return f"<li>{val}</li>"
     def __init__(self,ordered:bool=False)->None:
         self.options:list[str]=list[str]()
         self.ordered=ordered
@@ -48,10 +59,14 @@ class List(htmlWidget):
         '''
     def _buildElements(self)->str:
         final=""
-        for i in self.elements:final+=i+"\n"
+        for i in self.elements:
+            final+=i+"\n"
         return final
-    
+
     def getMember(self,value:str)->Member:
+        """
+        return members by value
+        """
         for i in self.elements:
             if i.replace("<li>","").replace("</li>","")==value:
                 return Member(self._ret('ol') if self.ordered else self._ret('ul'),self._buildElements())
@@ -66,4 +81,3 @@ class DescriptionList(htmlWidget):
         self.style:list[str]=list[str]()
         self.header="<dl >"
         self.footer="</dl>"
-
