@@ -1,4 +1,4 @@
 /dist
 /.vs
 /.git
-/__pycache__
+/src/PyperText/__pycache__
