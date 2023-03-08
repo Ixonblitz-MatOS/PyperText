@@ -1,0 +1,4 @@
+/dist
+/.vs
+/.git
+/src/PyperText/__pycache__
