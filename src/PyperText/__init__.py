@@ -1,3 +1,24 @@
 __name__="PyperText"
 __author__="Ixonblitz-MatOS"
 __version__="0.0.7"
+from ultraimport.ultraimport import ultraimport
+Script=ultraimport('__dir__/html.py','Script')
+Button=ultraimport('__dir__/htmlButton.py','Button')
+Entry,NumberEntry=ultraimport('__dir__/htmlEntry.py',{'Entry':type,'NumberEntry':type})
+FaviconError,ButtonError,EntryError,HeaderError,ImageError,TextboxError,ModifiersError,ListError,LinkError,WidgetError,ToolError,TableError=ultraimport('__dir__/htmlExceptions.py',{'FaviconError':type,'ButtonError':type,'HeaderError':type,'ImageError':type,'TextboxError':type,'ModifiersError':type,'ListError':type,'LinkError':type,'WidgetError':type,'ToolError':type,'TableError':type})
+Favicon=ultraimport('__dir__/htmlFavicon.py','Favicon')
+Header=ultraimport('__dir__/htmlHeader.py','Header')
+Image=ultraimport('__dir__/htmlImage.py','Image')
+Link=ultraimport('__dir__/htmlLink.py','Link')
+List,DescriptionList=ultraimport('__dir__/htmlList.py',{'List':type,'DescriptionList':type})
+italics,bold,underline,abbreviate,newline,code=ultraimport('__dir__/htmlModifiers.py',{'italics':type,'bold':type,'underline':type,'abbreviate':type,'newline':type,'code':type})
+Table=ultraimport('__dir__/htmlTable.py','Table')
+Textbox=ultraimport('__dir__/htmlTextbox.py','Textbox')
+exists,isFile,isUrl,getHeight,getWidth,stripLast,SuspendedString=ultraimport('__dir__/tools.py',{'exists':type,'isFile':type,'isUrl':type,'getHeight':type,'getWidth':type,'stripLast':type,'SuspendedString':type})
+htmlWidget,htmlParent,htmlObject=ultraimport('__dir__/htmlWidget.py',{'htmlwidget':type,'htmlParent':type,'htmlObject':type})
+__all__=['Script','Button','Entry','NumberEntry','FaviconError','ButtonError',
+         'EntryError','HeaderError','ImageError','TextboxError','ModifiersError',
+         'ListError','LinkError','WidgetError','ToolError','TableError','Favicon',
+         'Header','Image','Link','List','DescriptionList','italics','bold','underline',
+         'abbreviate','newline','code','Table','Textbox','htmlWidget','htmlParent','htmlObject',
+         'exists','isFile','isUrl','getHeight','getWidth','stripLast','SuspendedString']

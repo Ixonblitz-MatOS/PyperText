@@ -1,5 +1,5 @@
 """
-Link object
+Link and Favicon for 
 """
 # pylint: disable=locally-disabled, line-too-long,invalid-name, super-init-not-called, broad-except, unspecified-encoding,attribute-defined-outside-init
 from typing import Any,Type,Callable
@@ -7,8 +7,8 @@ from ultraimport.ultraimport import ultraimport
 
 Class=Any|Type[type]
 htmlWidget=ultraimport('__dir__/htmlWidget.py','htmlWidget')
-SuspendedString,isUrl=ultraimport('__dir__/tools.py',{'SuspendedString':Class,"isUrl":Callable})
-
+SuspendedString,isUrl,exists=ultraimport('__dir__/tools.py',{'SuspendedString':Class|type,"isUrl":Callable|type,"exists":Callable|type})
+FaviconError=ultraimport('__dir__/htmlExceptions.py','FaviconError')
 class Link(htmlWidget):
     """
     Link object for PyperText
@@ -104,6 +104,16 @@ class Link(htmlWidget):
         else:
             print("Link: Creating Link with Default Header")
             self.code=self.header+self.text+self.footer
-
+class Favicon(htmlWidget):
+    '''
+    Favicon widget for pypertext
+    '''
+    code=None
+    type="Favicon "
+    def __init__(self,file:str) -> None:
+        if not exists(file): raise FaviconError("The file provided does not exist")
+        print("Favicon: Favicon Created with:"+self.file)
+        self.code=f"<link rel=\"icon\" type=\"image/x-icon\" href=\"{self.file}\">"
+    
 if __name__=="__main__":
     pass

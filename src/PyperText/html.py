@@ -8,9 +8,6 @@ import os as oss
 import webbrowser
 from io import TextIOWrapper
 from ultraimport.ultraimport import ultraimport
-
-
-baseWidget = ultraimport('__dir__/htmlWidget.py', 'baseWidget')
 htmlParent = ultraimport('__dir__/htmlWidget.py','htmlParent')
 htmlWidget = ultraimport('__dir__/htmlWidget/py','htmlWidget')
 OS=platform.system()

@@ -1,0 +1,12 @@
+class FaviconError(Exception):pass
+class ButtonError(Exception):pass
+class EntryError(Exception):pass
+class HeaderError(Exception):pass
+class ImageError(Exception):pass
+class TextboxError(Exception):pass
+class ModifiersError(Exception):pass
+class ListError(Exception):pass
+class LinkError(Exception):pass
+class WidgetError(Exception):pass
+class ToolError(Exception):pass
+class TableError(Exception):pass
