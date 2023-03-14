@@ -5,30 +5,9 @@ List objects
 from typing import Any,Type
 from ultraimport.ultraimport import ultraimport
 Class=Any|Type[type]
+stripLast=ultraimport('__dir__/tools.py','stripLast')
 htmlWidget,htmlObject=ultraimport('__dir__/htmlWidget.py',{"htmlWidget":Class,"htmlObject":Class})
 #if[if]==if[if[if][if]]-=[if.iff[iff[if]]]
-class Member(htmlObject):
-    '''
-    HTML member class for lists derived from htmlObject
-    '''
-    code:str=""
-    type="Member"
-    def __init__(self,mem:str,opt:Any) -> None:
-        self.header=mem.split(">")[0]+" >"
-        self.footer=mem.split("<"[2])#<T>TT<T>->['','T>TT','T>']
-        self.value=mem.split(">"[1].split("<")[0])
-        self.style:list[str]=list[str]()
-        self.options=opt
-        if "style=" in self.header:
-            self.style=self.header.split("style\"")[1].rstrip(self.header.split("style\"")[1][-1]).split(";")#<tag style="">
-            self.header=self.header.split("style=")[0]+">"
-            if self.header!=f"<{self.header.split('<')[1].split(' ')[0]} >":
-                #there are options
-                print("There are options in Header, overwriting the provided options from before.")
-                self.options=self.header.split(">")[0].split("<")[1].split(" ")[2]
-                #<T as="" aa="">->['<T as="" aa=""','']->['','T','as="" aa=""','']
-            else:self.header=f"<{self.header.split('>')[0].split('<')[1].split(' ')[1]} >"#no options
-        else:pass#FINISH
 
 class List(htmlWidget):
     '''
@@ -50,26 +29,50 @@ class List(htmlWidget):
         self.options:list[str]=list[str]()
         self.ordered=ordered
         self.elements:list[str]=list[str]()
-        self.header=f"<{self._ret('ol') if self.ordered else self._ret('ul')}>"
+        self.header=f"<!--COMM--><{self._ret('ol') if self.ordered else self._ret('ul')}>"
         self.footer=f"</{self._ret('ol') if self.ordered else self._ret('ul')}>"
         self.style:list[str]=list[str]()
+        self.CustomHeader=False
     def addMember(self,member:str)->None:
         '''
         Adds an element to the list
         '''
+        self.elements.append(self._lst(member))
+    def addStyle(self,style:str)->None:
+        """
+        Add styling to ul
+        """
+        self.style.append(style)
+        self.CustomHeader=True
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def _buildElements(self)->str:
         final=""
-        for i in self.elements:
-            final+=i+"\n"
+        for i in self.elements:final+=i+"\n"
         return final
-
-    def getMember(self,value:str)->Member:
+    def _buildStyle(self)->str:
+        """
+        return members by value
+        """
+        final=""
+        for i in self.style:final+=i+";"
+        return final
+    def getMember(self,value:str)->str:
         """
         return members by value
         """
         for i in self.elements:
-            if i.replace("<li>","").replace("</li>","")==value:
-                return Member(self._ret('ol') if self.ordered else self._ret('ul'),self._buildElements())
+            if i.replace("<li>","").replace("</li>","")==value:return i
+    def finalize(self)->None:
+        """
+        Finalize the list for script
+        """
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
+        if self.CustomHeader:self.code=f"{stripLast(self.header)} {self._buildStyle()}>{self._buildElements()}{self.footer}"
+        self.code=f"{self.header}{self._buildElements()}{self.footer}"
 class DescriptionList(htmlWidget):
     '''
     HTML Description List Class derived from htmlWidget
@@ -79,5 +82,12 @@ class DescriptionList(htmlWidget):
     def __init__(self)->None:
         self.options:list[str]=list[str]()
         self.style:list[str]=list[str]()
-        self.header="<dl >"
+        self.header="<!--COMM--><dl >"
         self.footer="</dl>"
+        self.CustomHeader=False
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
+    

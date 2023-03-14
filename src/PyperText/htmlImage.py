@@ -21,7 +21,7 @@ class Image(htmlWidget):
         self.text=""
         self.options:list[str]=list[str]()
         self.style:list[str]=list[str]()
-        self.header="<img >"
+        self.header="<!--COMM--><img >"
         self.CustomHeader=False
         self.image=""
     def setAlternativeText(self,text:str)->None:
@@ -30,6 +30,11 @@ class Image(htmlWidget):
         '''
         self.text=text
         self.CustomHeader=True
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def setImage(self,image:str)->None:
         '''
         Set the image of the widget
@@ -89,6 +94,7 @@ class Image(htmlWidget):
         '''
         Finalize the Image to self.code
         '''
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
         if self.CustomHeader:
             print("Image: Creating Image with Custom Header")
             self._buildImage()

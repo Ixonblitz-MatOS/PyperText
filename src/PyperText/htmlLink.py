@@ -18,7 +18,7 @@ class Link(htmlWidget):
     def __init__(self) -> None:
         self.link=""
         self.text=""
-        self.header="<a>"
+        self.header="<!--COMM--><a>"
         self.footer="</a>"
         self.CustomHeader=False
         self.options:list[str]=list[str]()
@@ -38,6 +38,11 @@ class Link(htmlWidget):
                 self.CustomHeader:bool=True
                 return None
             print("Link: Url is not valid, to use anyway set force equal to True")
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def setText(self,text:str|SuspendedString)->None:
         '''
         Add text to show for the Link
@@ -95,6 +100,7 @@ class Link(htmlWidget):
         '''
         Finalize the Image to self.code
         '''
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
         if self.CustomHeader:
             print("Link: Creating Link with Custom Header")
             if self._buildStyle() =="" or self._buildStyle()==" ":
@@ -110,10 +116,11 @@ class Favicon(htmlWidget):
     '''
     code=None
     type="Favicon "
-    def __init__(self,file:str) -> None:
+    def __init__(self,file:str,comment:str=None) -> None:
         if not exists(file): raise FaviconError("The file provided does not exist")
         print("Favicon: Favicon Created with:"+self.file)
-        self.code=f"<link rel=\"icon\" type=\"image/x-icon\" href=\"{self.file}\">"
-    
+        if comment is None:
+            self.code=f"<link rel=\"icon\" type=\"image/x-icon\" href=\"{self.file}\">"
+        self.code=f"<!--{comment}--><link rel=\"icon\" type=\"image/x-icon\" href=\"{self.file}\">"
 if __name__=="__main__":
     pass

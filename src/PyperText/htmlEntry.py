@@ -218,7 +218,7 @@ class NumberEntry(htmlWidget):
         '''
         Finalize the code to self.code
         '''
-        if self.header.__contains__("<!--COMM-->"):self.header.replace()
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
         if self.CustomHeader:
             print("NumberEntry: Creating Entry with Custom Header")
             if self._buildStyle()=="" or self._buildStyle()== " ":

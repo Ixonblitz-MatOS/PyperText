@@ -19,7 +19,7 @@ class Header(htmlWidget):
         if size<0 or size>7:
             print("Header: The size was incorrectly entered and will use 3 as the default")
         self.size=size
-        self.header:str=f"<h{str(size)} >"
+        self.header:str=f"<!--COMM--><h{str(size)} >"
         self.text:str=""
         self.options:list[str]=list[str]()
         self.style:list[str]=list[str]()
@@ -31,6 +31,11 @@ class Header(htmlWidget):
         '''
         self.options.append(option)
         self.CustomHeader=True
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def setText(self,text:str|SuspendedString)->None:
         '''
         Set the Text of the header
@@ -89,6 +94,7 @@ class Header(htmlWidget):
         """
         finalize The code
         """
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
         if self.CustomHeader:
             print("Header: Creating Header with Custom Header")
             if self._buildStyle()=="" or self._buildStyle()==" ":
