@@ -15,8 +15,13 @@ class Entry(htmlWidget):
         self.style:list[str]=list[str]()
         self.text:str=""
         self.CustomHeader:bool=False
-        self.header:str="<input>"
+        self.header:str="<!--COMM--><input>"
         self.footer:str="</input>"
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def setSize(self,width:str|int)->None:
         '''
         Set Size of Entry
@@ -115,12 +120,11 @@ class Entry(htmlWidget):
         '''
         Finalize the code to self.code
         '''
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
         if self.CustomHeader:
             print("Entry: Creating Entry with Custom Header")
-            if self._buildStyle()=="" or self._buildStyle()==" ":
-                self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"+self.text+self.footer
-            else:
-                self.code=self.header.rstrip(self.header[-1])+" "+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
+            if self._buildStyle()=="" or self._buildStyle()==" ":self.code=self.header.rstrip(self.header[-1])+f" {self._buildOptions()}>"+self.text+self.footer
+            else:self.code=self.header.rstrip(self.header[-1])+" "+self._buildOptions()+f" style=\"{self._buildStyle()}\">"+self.text+self.footer
         else:
             print("Entry: Creating Entry with Default Header")
             self.code=self.header+self.text+self.footer
@@ -133,7 +137,7 @@ class NumberEntry(htmlWidget):
         self.style:list[str]=list[str]()
         self.text:str=""
         self.CustomHeader:bool=False
-        self.header:str="<input>"
+        self.header:str="<!--COMM--><input>"
         self.footer:str="</input>"
         self.options.append("type=\"number\"")
     def setSize(self,width:str|int)->None:
@@ -142,6 +146,11 @@ class NumberEntry(htmlWidget):
         '''
         self.options.append(f"size=\"{str(width)}\"")
         self.CustomHeader=True
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def setName(self,name:str)->None:
         '''
         Set name of Entry
@@ -209,6 +218,7 @@ class NumberEntry(htmlWidget):
         '''
         Finalize the code to self.code
         '''
+        if self.header.__contains__("<!--COMM-->"):self.header.replace()
         if self.CustomHeader:
             print("NumberEntry: Creating Entry with Custom Header")
             if self._buildStyle()=="" or self._buildStyle()== " ":

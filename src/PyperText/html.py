@@ -56,12 +56,17 @@ class Script(htmlWidget,htmlParent):
                 quit(1)
         self.fp: TextIOWrapper=open(self.file,'w+')
         self.text: str=""
-        self.header:str="<!DOCTYPE html>\n<html>"
+        self.header:str="<!--COMM--><!DOCTYPE html>\n<html>"
         self.footer:str="</html>"
         self.CustomHeader:bool=False
         self.scripts: list[str]=list[str]()
         self.final: str=str()
         self.stylesheet=None
+    def addComment(self,comment:str)->None:
+        """
+        Adding optional comment to the file
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def addScript(self,script:str,force:bool=False)->None:
         '''
         Adds a Javascript script to the file
@@ -104,14 +109,11 @@ class Script(htmlWidget,htmlParent):
         '''
         Create and write the HTML for the script and write to the file.
         '''
-        if self.CustomHeader:
-            print("Creating With Custom Header...")
-        else:
-            print("Creating with Default Header")
-        if self.stylesheet is None:
-            self.final+=self.header+self.text+self._buildScripts()+self.footer
-        else:
-            self.final+=self.header+open(self.stylesheet,'r').read()+"\n"+self.text+self._buildScripts()+self.footer
+        if self.CustomHeader:print("Creating With Custom Header...")
+        else:print("Creating with Default Header")
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
+        if self.stylesheet is None:self.final+=self.header+self.text+self._buildScripts()+self.footer
+        else:self.final+=self.header+open(self.stylesheet,'r').read()+"\n"+self.text+self._buildScripts()+self.footer
         self.fp.write(self.final)
         self.fp.close()
         if opens:

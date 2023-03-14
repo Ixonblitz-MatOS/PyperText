@@ -12,13 +12,18 @@ class Button(htmlWidget):
     code:str=""
     type="Button"
     def __init__(self) -> None:
-        self.header:str="<button>"
+        self.header:str="<!--COMM--><button>"
         self.text:str=""
         self.footer:str="</button>"
         self.options:list[str]=list[str]()
         self.CustomHeader:bool=False
         self.requiredScripts: list[str]=list[str]()
         self.style: list[str]=list[str]()
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def setText(self,text:str|SuspendedString)->None:
         '''
         Set the Text of the Button
@@ -82,12 +87,14 @@ class Button(htmlWidget):
         '''
         Update the Button Code Variable
         '''
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
         if self.CustomHeader:
             print("Button: Creating Button with Custom Header")
+            self.code=self.header.rstrip(self.header[-1])+" "+self._finalizeoptions()+">"+self.text+self.footer
         else:
             print("Button: Creating Button with Default Header")
-        self.code=self.header.rstrip(self.header[-1])+" "+self._finalizeoptions()+">"+self.text+self.footer
-
+            self.code=self.header+self.text+self.footer
+        
 
 if __name__=="__main__":
     pass

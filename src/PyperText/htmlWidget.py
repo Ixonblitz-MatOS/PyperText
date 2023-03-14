@@ -5,6 +5,7 @@ class htmlWidget(object):
     '''
     code:str=""
     type:str=""
+    comments:str=""
     def __repr__(self) -> str:return "<Class 'htmlWidget' at" + str(id(self))+">"
     def __str__(self):return self.__repr__()
 class htmlParent(object):
