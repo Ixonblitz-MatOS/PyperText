@@ -71,7 +71,10 @@ class List(htmlWidget):
         Finalize the list for script
         """
         if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
-        if self.CustomHeader:self.code=f"{stripLast(self.header)} {self._buildStyle()}>{self._buildElements()}{self.footer}"
+        if self.CustomHeader:
+            print("List: Creating List with Custom Header")
+            self.code=f"{stripLast(self.header)} {self._buildStyle()}>{self._buildElements()}{self.footer}"
+        print("List: Creating List with Default Header")
         self.code=f"{self.header}{self._buildElements()}{self.footer}"
 class DescriptionList(htmlWidget):
     '''
@@ -84,10 +87,54 @@ class DescriptionList(htmlWidget):
         self.style:list[str]=list[str]()
         self.header="<!--COMM--><dl >"
         self.footer="</dl>"
+        self.elements=[]
         self.CustomHeader=False
     def setComment(self,comment:str)->None:
         """
         Set the optional comment
         """
         self.header.replace("<!--COMM-->",f"<!--{comment}-->")
-    
+    def addStyle(self,style:str)->None:
+        """
+        Add CSS to description list
+        """
+        self.style.append(style)
+        self.CustomHeader=True
+    def addOption(self,option:str)->None:
+        """
+        Add options to description list
+        """
+        self.options.append(option)
+        self.CustomHeader=True
+    def addTerm(self,value:str,style:str=None,options:str=None)->None:
+        """
+        add a dt tag to the description list
+        """
+        self.elements.append(f"<dt {style if style is not None else ''} {options if options is not None else ''}>{value}</dt>")
+    def addData(self,value:str,style:str=None,options:str=None)->None:
+        """
+        add a DD tag to description list
+        """
+        self.elements.append(f"<dd {style if style is not None else ''} {options if options is not None else ''}> {value}</dd>")
+    def _buildStyle(self)->str:
+        final="style=\""
+        for i in self.style:final+=f"{i};"
+        return final+"\""
+    def _buildOption(self)->str:
+        final=""
+        for i in self.options:final+=f"{i} "
+        return final
+    def _buildElements(self)->str:
+        final=""
+        for i in self.elements:final+=f"{i}\n"
+        return final
+    def finalize(self)->None:
+        """
+        Finalize the code for the description list
+        """
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
+        if self.CustomHeader:
+            print("Description List: Creating Description list with Custom header")
+            self.code=f"{stripLast(self.header)+f' {self._buildStyle()} {self._buildOption()}>'}{self._buildElements()}{self.footer}"
+        print("Description List: Creating Description list with Default header")
+        self.code=f"{self.header}{self._buildElements()}{self.footer}"

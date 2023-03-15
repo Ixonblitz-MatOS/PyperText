@@ -13,10 +13,15 @@ class TableHeader(htmlWidget):
     def __init__(self) -> None:
         self.options:list[str]=list[str]()
         self.style:list[str]=list[str]()
-        self.header="<tr>"
+        self.header="<!--COMM--><tr>"
         self.elements=[]
         self.CustomHeader=False
         self.footer="</tr>"
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def addStyle(self,style:str)->None:
         """
         Add style to the TR tag
@@ -60,6 +65,7 @@ class TableHeader(htmlWidget):
         """
         Finalize the code for the Table Header to be passed to the table
         """
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
         if self.CustomHeader:
             print("Table Header: Creating TableHeader with Custom Header")
             self.code=f"{stripLast(self.header)} {self._buildStyle()} {self.options}>{self._buildElements()}{self.footer}"

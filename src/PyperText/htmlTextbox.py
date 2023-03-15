@@ -15,8 +15,13 @@ class Textbox(htmlWidget):
         self.style:list[str]=list[str]()
         self.text:str=""
         self.CustomHeader:bool=False
-        self.header:str="<textarea>"
+        self.header:str="<!--COMM--><textarea>"
         self.footer:str="</textarea>"
+    def setComment(self,comment:str)->None:
+        """
+        Set the optional comment
+        """
+        self.header.replace("<!--COMM-->",f"<!--{comment}-->")
     def addCustomOption(self,option:str)->None:
         '''
         Add option not implemented yet
@@ -73,6 +78,7 @@ class Textbox(htmlWidget):
         '''
         Finalizes code to self.code
         '''
+        if self.header.__contains__("<!--COMM-->"):self.header.replace("<!--COMM-->","")
         if self.CustomHeader:
             print("Textbox: Creating Textbox with Custom Header")
             if self._buildStyle()=='' or self._buildStyle()==' ':
